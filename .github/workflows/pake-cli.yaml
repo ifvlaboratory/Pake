@@ -50,6 +50,11 @@ on:
           - 'deb'
           - 'appimage'
           - 'all'
+      use_local:
+        description: '[Use local static files to build]'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -118,6 +123,13 @@ jobs:
           npm install shelljs
           npm install axios
 
+      - name: Get AriaNg
+        if: inputs.platform == 'windows-latest'
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://github.com/mayswind/AriaNg/releases/download/1.3.7/AriaNg-1.3.7.zip
+          7z x AriaNg-1.3.7.zip -o'AriaNg-1.3.7'
+
       - name: Build with pake-cli
         run: |
           node ./script/build_with_pake_cli.js
@@ -133,6 +145,7 @@ jobs:
           MULTI_ARCH: ${{ inputs.multi_arch }}
           TARGETS: ${{ inputs.targets }}
           SAFE_DOMAIN: ${{ inputs.safe_domain }}
+          USE_LOCAL: ${{ inputs.use_local}}
 
       - name: Upload archive
         uses: actions/upload-artifact@v3

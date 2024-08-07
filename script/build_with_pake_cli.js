@@ -18,6 +18,8 @@ console.log('resize: ', process.env.RESIZE);
 console.log('is multi arch? only for Mac: ', process.env.MULTI_ARCH);
 console.log('targets type? only for Linux: ', process.env.TARGETS);
 console.log('safe-domain: ', process.env.SAFE_DOMAIN);
+console.log('use local file: ', process.env.USE_LOCAL);
+console.log('local file path: ', process.env.LOCAL_PATH);
 console.log('===========================\n');
 
 cd('node_modules/pake-cli');
@@ -92,5 +94,9 @@ const main = async () => {
   console.log('Build Success');
   cd('../..');
 };
+
+if (process.env.USE_LOCAL) {
+  params = `${params} --use-local-file`;
+}
 
 main();
