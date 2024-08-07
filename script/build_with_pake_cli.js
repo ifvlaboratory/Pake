@@ -18,12 +18,10 @@ console.log('resize: ', process.env.RESIZE);
 console.log('is multi arch? only for Mac: ', process.env.MULTI_ARCH);
 console.log('targets type? only for Linux: ', process.env.TARGETS);
 console.log('safe-domain: ', process.env.SAFE_DOMAIN);
-console.log('use local file: ', process.env.USE_LOCAL);
-console.log('local file path: ', process.env.LOCAL_PATH);
 console.log('===========================\n');
 
 cd('node_modules/pake-cli');
-let params = `node cli.js ${process.env.URL} --name ${process.env.NAME} --height ${process.env.HEIGHT} --width ${process.env.WIDTH}`;
+let params = `npx pake ${process.env.URL} --name ${process.env.NAME} --height ${process.env.HEIGHT} --width ${process.env.WIDTH}`;
 
 if (process.env.HIDE_TITLE_BAR === 'true') {
   params = `${params} --hide-title-bar`;
@@ -95,7 +93,7 @@ const main = async () => {
   cd('../..');
 };
 
-if (process.env.USE_LOCAL) {
+if (!process.env.URL.includes("http://") && !process.env.URL.includes("https://")) {
   params = `${params} --use-local-file`;
 }
 
